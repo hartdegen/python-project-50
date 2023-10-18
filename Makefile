@@ -1,9 +1,6 @@
 install:
 	poetry install
 
-gendiff:
-	poetry run gendiff
-
 build:
 	poetry build
 
@@ -13,5 +10,11 @@ publish:
 package-install:
 	python3 -m pip install --user dist/*.whl
 
+gendiff:
+	poetry run gendiff
+
 lint:
 	poetry run flake8 gendiff
+
+test:
+	poetry run pytest -s
