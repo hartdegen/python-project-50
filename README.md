@@ -3,3 +3,18 @@
 
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/hartdegen/python-project-50/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/hartdegen/python-project-50/actions)
+
+### Install
+
+```
+$ make install
+$ make build
+$ make publish
+$ make package-install
+```
+
+### Usage example
+
+```
+$ gendiff tests/fixtures/file1.json tests/fixtures/file2.json
+```
