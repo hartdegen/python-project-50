@@ -1,54 +1,41 @@
-from gendiff.parsers import MAPPING
+from gendiff.formatters.stylish import make_stylish_string
 
 
-def make_dict(status, key, value, deleted_value=None):
-    return {
-        "status": status,
+def make_dict(status, key, value, prev_value=None):
+    dictionary = {
         "key": key,
+        "status": status,
+        "prev_value": prev_value,
         "value": value,
-        "deleted_value": deleted_value,
     }
+    return dictionary
 
 
-def make_text_result(mapped):
-    result = []
-    for item in mapped:
-        status, key, value, deleted_value = (
-            item["status"],
-            item["key"],
-            str(item["value"]).lower()
-            if isinstance(item["value"], bool)
-            else item["value"],
-            str(item["value"]).lower()
-            if isinstance(item["deleted_value"], bool)
-            else item["value"],
-        )
-        if status == "deleted":
-            result.append(f"  - {key}: {value}")
-        if status == "added":
-            result.append(f"  + {key}: {value}")
-        if status == "same":
-            result.append(f"    {key}: {value}")
-        if status == "changed":
-            result.append(f"  - {key}: {deleted_value}")
-            result.append(f"  + {key}: {value}")
-    return "{\n" + "\n".join(result) + "\n}"
-
-
-def generate_diff(dict1, dict2, ext):
-    before = MAPPING[ext](dict1)
-    after = MAPPING[ext](dict2)
+def func(before, after):
     keys = list({**before, **after}.keys())
     keys.sort()
-
     def f(key):
-        if key not in after:
-            return make_dict("deleted", key, before[key])
         if key not in before:
+            print('ADDED', key, after[key])
             return make_dict("added", key, after[key])
-        if before[key] == after[key]:
-            return make_dict("same", key, before[key])
-        if before[key] != after[key]:
-            return make_dict("changed", key, after[key], before[key])
+        if key not in after:
+            print('DELETED', key, before[key])
+            return make_dict("deleted", key, before[key])
+        if key in before and key in after:
+            if isinstance(before[key], dict) and isinstance(after[key], dict):
+                print('NESTED', key)
+                return make_dict("nested", key, func(before[key], after[key]))
+            elif before[key] == after[key]:
+                print('SAME', key, before[key])
+                return make_dict("same", key, before[key])
+            elif before[key] != after[key]:
+                print('CHANGED', key, after[key], before[key])
+                return make_dict("changed", key, after[key], before[key])
+            
+    l = list(map(f, keys))
+    return l
 
-    return make_text_result(map(f, keys))
+def generate_diff(before, after):
+    l = func(before, after)
+    result = make_stylish_string(l)
+    return result

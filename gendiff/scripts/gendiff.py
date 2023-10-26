@@ -1,8 +1,6 @@
 import argparse
-# import json
-# import yaml
 import pathlib
-# from gendiff.parsers import MAPPING
+from gendiff.parsers import MAPPING
 from gendiff.formatters.formatter import generate_diff
 
 
@@ -22,7 +20,9 @@ def main():
         open(file_path1) as f1,
         open(file_path2) as f2,
     ):
-        result = generate_diff(f1, f2, file_extension)
+        before = MAPPING[file_extension](f1)
+        after = MAPPING[file_extension](f2)
+        result = generate_diff(before, after)
         print(result)
 
 
