@@ -1,6 +1,5 @@
 import argparse
 import pathlib
-from gendiff.parsers import MAPPING
 from gendiff.formatters.formatter import generate_diff
 
 
@@ -16,14 +15,7 @@ def main():
     file_path1 = args.first_file
     file_path2 = args.second_file
     file_extension = pathlib.Path(file_path1).suffix
-    with (
-        open(file_path1) as f1,
-        open(file_path2) as f2,
-    ):
-        before = MAPPING[file_extension](f1)
-        after = MAPPING[file_extension](f2)
-        result = generate_diff(before, after)
-        print(result)
+    generate_diff(file_path1, file_path2, file_extension)
 
 
 if __name__ == "__main__":

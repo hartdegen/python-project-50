@@ -7,14 +7,14 @@
 ### Install
 
 ```
-$ make install
-$ make build
-$ make publish
-$ make package-install
+make install
+make build
+make publish
+make package-install
 ```
 
 ### Usage example
 
 ```
-$ gendiff tests/fixtures/file1.json tests/fixtures/file2.json
+gendiff tests/fixtures/file1.json tests/fixtures/file2.json
 ```
