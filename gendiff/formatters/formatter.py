@@ -1,5 +1,7 @@
+import pathlib
 from gendiff.parsers import MAPPING
 from gendiff.formatters.stylish import make_stylish_string
+from gendiff.formatters.plain import make_plain_string
 
 
 def make_dict(status, key, value, prev_value=None):
@@ -33,12 +35,16 @@ def func(before, after):  # noqa: C901
     return l
 
 
-def generate_diff(file_path1, file_path2, file_extension):
+def generate_diff(file_path1, file_path2, format_name):
     with (
         open(file_path1) as f1,
         open(file_path2) as f2,
     ):
+        file_extension = pathlib.Path(file_path1).suffix
         before = MAPPING[file_extension](f1)
         after = MAPPING[file_extension](f2)
         some_list = func(before, after)
-        return make_stylish_string(some_list)
+        if format_name == "stylish":
+            return make_stylish_string(some_list)
+        if format_name == "plain":
+            return make_plain_string(some_list)
