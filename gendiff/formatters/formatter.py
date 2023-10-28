@@ -48,3 +48,6 @@ def generate_diff(file_path1, file_path2, format_name):
             return make_stylish_string(some_list)
         if format_name == "plain":
             return make_plain_string(some_list)
+        if format_name == "json":
+            json_merged = {**before, **after}
+            return json_merged
