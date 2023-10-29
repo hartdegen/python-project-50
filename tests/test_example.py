@@ -1,4 +1,3 @@
-import json
 from gendiff import generate_diff
 
 
@@ -24,4 +23,3 @@ def test_plain():
     ):
         diff = generate_diff('tests/fixtures/file1.yaml', 'tests/fixtures/file2.yaml', "plain")
         assert diff == result.read()
-
