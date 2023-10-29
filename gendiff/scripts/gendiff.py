@@ -1,5 +1,6 @@
 import argparse
 import pathlib
+import json
 from gendiff.parsers.parsers import MAPPING
 from gendiff.formatters.formatter import make_format
 from gendiff.formatters.stylish import make_stylish_string
@@ -20,8 +21,8 @@ def generate_diff(file_path1, file_path2, format_name="stylish"):
         if format_name == "plain":
             return make_plain_string(some_list)
         if format_name == "json":
-            json_merged = {**before, **after}
-            return json_merged
+            merged = {**before, **after}
+            return json.dumps(merged)
 
 
 def main():
