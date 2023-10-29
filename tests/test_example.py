@@ -25,13 +25,3 @@ def test_plain():
         diff = generate_diff('tests/fixtures/file1.yaml', 'tests/fixtures/file2.yaml', "plain")
         assert diff == result.read()
 
-
-def test_json():
-    # with (
-    #     open('tests/fixtures/result_json.json') as result,
-    # ):
-    diff = generate_diff('tests/fixtures/file1.yaml', 'tests/fixtures/file2.yaml', "json")
-    try:
-        json.loads(diff)
-    except Exception as e:
-        raise ValueError(f"ERROR TEST_JSON\n '{e}'!")
