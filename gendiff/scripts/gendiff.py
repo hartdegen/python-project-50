@@ -6,7 +6,7 @@ from gendiff.formatters.stylish import make_stylish_string
 from gendiff.formatters.plain import make_plain_string
 
 
-def generate_diff(file_path1, file_path2, format_name):
+def generate_diff(file_path1, file_path2, format_name="stylish"):
     with (
         open(file_path1) as f1,
         open(file_path2) as f2,
