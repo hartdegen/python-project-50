@@ -1,6 +1,6 @@
-import pathlib
 import argparse
-from gendiff.parsers import MAPPING
+import pathlib
+from gendiff.parsers.parsers import MAPPING
 from gendiff.formatters.formatter import make_format
 from gendiff.formatters.stylish import make_stylish_string
 from gendiff.formatters.plain import make_plain_string
